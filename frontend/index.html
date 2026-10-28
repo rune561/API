@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <header class="header">
+            <div class="brand">
+                <div class="logo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="3"/><path d="M9 4.5h6M9 12.5l2 2 4-4"/></svg>
+                </div>
+                <div>
+                    <h1>Task Manager</h1>
+                    <p class="subtitle">Connected to Aiven MySQL</p>
+                </div>
+            </div>
+            <div class="date-pill">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+                <span id="today-date"></span>
+            </div>
+        </header>
+
+        <section class="stats" aria-label="Task summary">
+            <div class="stat stat-total">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 10h6M9 14h6"/></svg>
+                </div>
+                <div><span class="stat-label">Total Tasks</span><strong id="stat-total">0</strong></div>
+            </div>
+            <div class="stat stat-done">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>
+                </div>
+                <div><span class="stat-label">Completed</span><strong id="stat-done">0</strong></div>
+            </div>
+            <div class="stat stat-pending">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </div>
+                <div><span class="stat-label">Pending</span><strong id="stat-pending">0</strong></div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <form id="task-form" autocomplete="off">
+                <label for="task-input" class="visually-hidden">New task</label>
+                <input type="text" id="task-input" placeholder="What needs to be done?" maxlength="100" required>
+                <button type="submit" class="btn-add">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                    Add Task
+                </button>
+            </form>
+            <div id="message-box" role="status" hidden></div>
+        </section>
+
+        <section class="panel">
+            <div class="list-header">
+                <div>
+                    <h2>My Tasks</h2>
+                    <p id="list-summary" class="subtitle">0 tasks</p>
+                </div>
+                <span class="tag">Task List</span>
+            </div>
+            <ul id="task-list" aria-live="polite"></ul>
+        </section>
+
+        <footer class="footer">
+            Built with <span class="heart" aria-label="love">&hearts;</span> for SYD204 | Connected to Aiven MySQL
+        </footer>
+    </div>
+
+    <noscript>Please enable JavaScript to use the task manager.</noscript>
+    <script src="app.js"></script>
+</body>
+</html>
