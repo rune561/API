@@ -1,19 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
-const cors = require('cors');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
 app.use(express.json());
 
-// 👇 Serve files directly from the root folder (where server.js is) 👇
-app.use(express.static(__dirname));
+// 👇 1. TELL EXPRESS TO SERVE YOUR CUSTOM FOLDER 👇
+app.use(express.static(path.join(__dirname, 'froentend')));
 
-// Database Connection
+// 👇 2. DATABASE CONNECTION (With safety checks) 👇
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -31,6 +29,7 @@ app.get('/tasks', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM tasks ORDER BY id DESC');
     res.json(rows);
   } catch (err) {
+    console.error("DB Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -41,6 +40,7 @@ app.post('/tasks', async (req, res) => {
     const [result] = await pool.query('INSERT INTO tasks (title) VALUES (?)', [title]);
     res.status(201).json({ id: result.insertId, title: title });
   } catch (err) {
+    console.error("DB Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -51,6 +51,7 @@ app.patch('/tasks/:id', async (req, res) => {
     await pool.query('UPDATE tasks SET completed = ? WHERE id = ?', [completed, req.params.id]);
     res.json({ message: 'Updated' });
   } catch (err) {
+    console.error("DB Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -60,8 +61,14 @@ app.delete('/tasks/:id', async (req, res) => {
     await pool.query('DELETE FROM tasks WHERE id = ?', [req.params.id]);
     res.status(204).send();
   } catch (err) {
+    console.error("DB Error:", err.message);
     res.status(500).json({ error: err.message });
   }
+});
+
+// 👇 3. FALLBACK: Loads your custom index.html if the browser asks for it 👇
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'froentend', 'index.html'));
 });
 
 // Start server
