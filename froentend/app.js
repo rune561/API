@@ -1,5 +1,5 @@
 // The URL of your backend API
-const API_URL = 'http://localhost:3000/tasks';
+const API_URL = 'http://localhost:3000/tasks'; 
 
 // Get DOM elements
 const taskForm = document.getElementById('task-form');
