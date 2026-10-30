@@ -1,17 +1,28 @@
-# Simplified Task API
+# Task Manager — Full-Stack Application
 
-A beginner-friendly, full-stack REST API built with **Node.js**, **Express**, and **MySQL (Aiven)**. 
-
-Unlike the advanced MVC version, this project consolidates all routing, validation, and SQL queries into a single `server.js` file to make it easier to understand how the pieces connect.
+A complete full-stack Task Manager built with **Node.js**, **Express**, and **MySQL (Aiven)**. It features a custom frontend UI that connects to a REST API to manage tasks in a cloud database.
 
 ## Project Structure
 
-```text
-simplified-task-api/
-├── .env                  # Your secret credentials (DO NOT COMMIT)
-├── .env.example          # Template for environment variables
-├── .gitignore            # Tells Git what to ignore
-├── package.json          # Project dependencies and scripts
-├── server.js             # The main entry point (Routes + Logic)
-└── src/
-    └── db.js             # MySQL connection pool
+task API/
+├── database/
+│   └── data.sql              # SQL script to create the tasks table
+├── froentend/                # Frontend UI files
+│   ├── app.js
+│   ├── index.html
+│   └── style.css
+├── src/
+│   ├── controllers/          # MVC Controllers
+│   │   └── taskController.js
+│   ├── models/               # MVC Models (Database queries)
+│   │   └── taskmodel.js
+│   ├── routes/               # MVC Routes
+│   │   └── taskRoutes.js
+│   └── db.js                 # MySQL connection pool
+├── .env                      # Secret database credentials (DO NOT COMMIT)
+├── .gitignore                # Tells Git what to ignore
+├── package.json              # Project dependencies and scripts
+├── package-lock.json
+├── README.md
+├── server.js                 # Main entry point (Serves UI + API Routes)
+└── test-db.js                # Script to test Aiven database connection
